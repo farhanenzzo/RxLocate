@@ -151,7 +151,7 @@ class SecurityConfiguration {
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> req
 						.requestMatchers("/login").permitAll()
-						.requestMatchers("/map/**").authenticated()
+						.requestMatchers("/map/**", "doc/**").authenticated()
 				)
 
 				.sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
