@@ -1,8 +1,6 @@
 package SquareHealth.Map.Medicine_User.Controller;
 
 import SquareHealth.Map.Medicine_User.DTO.DoctorDTO;
-import SquareHealth.Map.Medicine_User.DTO.DrugDTO;
-import SquareHealth.Map.Medicine_User.DTO.LocationDTO;
 import SquareHealth.Map.Medicine_User.Repository.DoctorRepository;
 import SquareHealth.Map.Medicine_User.Service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;

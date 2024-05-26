@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class LocationDTO {
-    private double lat;
-    private double lng;
-    private String name;
+@AllArgsConstructor
+public class DivisionDTO {
 
-    public LocationDTO(double lat, double lng, String name) {
-        this.lat = lat;
-        this.lng = lng;
-        this.name = name;
-    }
+    private int divisionId;
+
+    private String divisionName;
+
+    private double lat;
+
+    private double lng;
 }

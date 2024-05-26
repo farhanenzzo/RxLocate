@@ -1,65 +1,138 @@
 create database square_map;
 use square_map;
 
-CREATE TABLE location (
-    id BIGINT AUTO_INCREMENT,
-    name VARCHAR(100) UNIQUE,
-    lat DOUBLE NOT NULL,
-    lng DOUBLE NOT NULL,
-    CONSTRAINT pk_bd_location PRIMARY KEY (id)
+-- ----------------------------------------
+
+CREATE TABLE division (
+  id INT AUTO_INCREMENT,
+  name VARCHAR(100),
+  lat DECIMAL(10, 6),
+  lng DECIMAL(10, 6),
+  CONSTRAINT pk_division PRIMARY KEY (id)
 );
 
-INSERT INTO location (id, name, lat, lng) VALUES
-(1, 'Shahbag', 23.7348, 90.3929),
-(2, 'Dhanmondi', 23.7465, 90.3760),
-(3, 'Gulshan', 23.7915, 90.4156),
-(4, 'Uttara', 23.8759, 90.3915),
-(5, 'Banani', 23.7940, 90.4153),
-(6, 'Mirpur', 23.8223, 90.3654),
-(7, 'Mohammadpur', 23.7639, 90.3610),
-(8, 'Farmgate', 23.7537, 90.3844),
-(9, 'Motijheel', 23.7345, 90.4146),
-(10, 'Karwan Bazar', 23.7503, 90.4035),
-(11, 'New Market', 23.7303, 90.4081),
-(12, 'Science Laboratory', 23.7368, 90.3779),
-(13, 'Lalbagh', 23.7115, 90.4088),
-(14, 'Badda', 23.7876, 90.4236),
-(15, 'Rampura', 23.7622, 90.4173),
-(16, 'Mohakhali', 23.7799, 90.4066),
-(17, 'Khilgaon', 23.7384, 90.4334),
-(18, 'Pallabi', 23.8313, 90.3632),
-(19, 'Banasree', 23.7740, 90.4335),
-(20, 'Baridhara', 23.8037, 90.4231),
-(21, 'Niketon', 23.7974, 90.4043),
-(22, 'Wari', 23.7154, 90.4035),
-(23, 'Jatrabari', 23.7191, 90.4557),
-(24, 'Mirpur DOHS', 23.8213, 90.3683),
-(25, 'Baily Road', 23.7294, 90.4023),
-(26, 'Mohakhali DOHS', 23.7993, 90.4082),
-(27, 'Shyamoli', 23.7607, 90.3714),
-(28, 'Banglamotor', 23.7486, 90.3852),
-(29, 'Malibagh', 23.7484, 90.4290),
-(30, 'Rampura Bridge', 23.7593, 90.4272),
-(31, 'Hazaribagh', 23.7247, 90.4167),
-(32, 'Azimpur', 23.7211, 90.3880),
-(33, 'Tejgaon', 23.7617, 90.4064),
-(34, 'Kamalapur', 23.7313, 90.4164),
-(35, 'Agargaon', 23.7753, 90.3715),
-(36, 'Mirpur-10', 23.8129, 90.3630),
-(37, 'Mirpur-1', 23.8052, 90.3656),
-(38, 'Mohammadpur Town Hall', 23.7678, 90.3606),
-(39, 'Mohammadpur Bus Stand', 23.7651, 90.3624),
-(40, 'Kalabagan', 23.7494, 90.3748),
-(41, 'Shantinagar', 23.7311, 90.4178),
-(42, 'Hatirpool', 23.7443, 90.3926),
-(43, 'Mohakhali Bus Stand', 23.7889, 90.4080),
-(44, 'Bongshal', 23.7151, 90.4093),
-(45, 'Gulistan', 23.7226, 90.4165),
-(46, 'Malibagh Railgate', 23.7523, 90.4292),
-(47, 'Malibagh Mor', 23.7546, 90.4228),
-(48, 'Kuril Biswa Road', 23.8056, 90.4254);
+
+INSERT INTO division (id, name, lat, lng) VALUES
+  (1, 'Barishal', 22.701002, 90.353451),
+  (2, 'Chattogram', 22.356851, 91.783182),
+  (3, 'Dhaka', 23.810332, 90.412518),
+  (4, 'Khulna', 22.845641, 89.540328),
+  (5, 'Rajshahi', 24.363589, 88.624135),
+  (6, 'Rangpur', 25.743892, 89.275227),
+  (7, 'Sylhet', 24.894929, 91.868706),
+  (8, 'Mymensingh', 24.747149, 90.420273);
 
 
+CREATE TABLE district (
+  id int AUTO_INCREMENT,
+  division_id int NOT NULL,
+  name VARCHAR(100),
+  lat DECIMAL(10, 6),
+  lng DECIMAL(10, 6),
+  CONSTRAINT pk_district PRIMARY KEY (id),
+  CONSTRAINT fk_district_division_id FOREIGN KEY (division_id) REFERENCES division(id)
+);
+
+INSERT INTO district (id, division_id, name, lat, lng) VALUES
+   (1, 3, 'Dhaka', 23.7115253, 90.4111451),
+   (2, 3, 'Faridpur', 23.6070822, 89.8429406),
+   (3, 3, 'Gazipur', 24.0022858, 90.4264283),
+   (4, 3, 'Gopalganj', 23.0050857, 89.8266059),
+   (5, 8, 'Jamalpur', 24.937533, 89.937775),
+   (6, 3, 'Kishoreganj', 24.444937, 90.776575),
+   (7, 3, 'Madaripur', 23.164102, 90.1896805),
+   (8, 3, 'Manikganj', 23.8644, 90.0047),
+   (9, 3, 'Munshiganj', 23.5422, 90.5305),
+   (10, 8, 'Mymensingh', 24.7471, 90.4203),
+   (11, 3, 'Narayanganj', 23.63366, 90.496482),
+   (12, 3, 'Narsingdi', 23.932233, 90.71541),
+   (13, 8, 'Netrokona', 24.870955, 90.727887),
+   (14, 3, 'Rajbari', 23.7574305, 89.6444665),
+   (15, 3, 'Shariatpur', 23.2423, 90.4348),
+   (16, 8, 'Sherpur', 25.0204933, 90.0152966),
+   (17, 3, 'Tangail', 24.2513, 89.9167),
+   (18, 5, 'Bogura', 24.8465228, 89.377755),
+   (19, 5, 'Joypurhat', 25.0968, 89.0227),
+   (20, 5, 'Naogaon', 24.7936, 88.9318),
+   (21, 5, 'Natore', 24.420556, 89.000282),
+   (22, 5, 'Nawabganj', 24.5965034, 88.2775122),
+   (23, 5, 'Pabna', 23.998524, 89.233645),
+   (24, 5, 'Rajshahi', 24.3745, 88.6042),
+   (25, 5, 'Sirajgonj', 24.4533978, 89.7006815),
+   (26, 6, 'Dinajpur', 25.6217061, 88.6354504),
+   (27, 6, 'Gaibandha', 25.328751, 89.528088),
+   (28, 6, 'Kurigram', 25.805445, 89.636174),
+   (29, 6, 'Lalmonirhat', 25.9923, 89.2847),
+   (30, 6, 'Nilphamari', 25.931794, 88.856006),
+   (31, 6, 'Panchagarh', 26.3411, 88.5541606),
+   (32, 6, 'Rangpur', 25.7558096, 89.244462),
+   (33, 6, 'Thakurgaon', 26.0336945, 88.4616834),
+   (34, 1, 'Barguna', 22.0953, 90.1121),
+   (35, 1, 'Barishal', 22.7010, 90.3535),
+   (36, 1, 'Bhola', 22.685923, 90.648179),
+   (37, 1, 'Jhalokati', 22.6406, 90.1987),
+   (38, 1, 'Patuakhali', 22.3596316, 90.3298712),
+   (39, 1, 'Pirojpur', 22.5841, 89.9720),
+   (40, 2, 'Bandarban', 22.1953275, 92.2183773),
+   (41, 2, 'Brahmanbaria', 23.9570904, 91.1119286),
+   (42, 2, 'Chandpur', 23.2332585, 90.6712912),
+   (43, 2, 'Chattogram', 22.335109, 91.834073),
+   (44, 2, 'Cumilla', 23.4682747, 91.1788135),
+   (45, 2, 'Cox''s Bazar', 21.4272, 92.0058),
+   (46, 2, 'Feni', 23.0159, 91.3976),
+   (47, 2, 'Khagrachari', 23.119285, 91.984663),
+   (48, 2, 'Lakshmipur', 22.942477, 90.841184),
+   (49, 2, 'Noakhali', 22.869563, 91.099398),
+   (50, 2, 'Rangamati', 22.7324, 92.2985),
+   (51, 7, 'Habiganj', 24.374945, 91.41553),
+   (52, 7, 'Maulvibazar', 24.482934, 91.777417),
+   (53, 7, 'Sunamganj', 25.0658042, 91.3950115),
+   (54, 7, 'Sylhet', 24.8897956, 91.8697894),
+   (55, 4, 'Bagerhat', 22.651568, 89.785938),
+   (56, 4, 'Chuadanga', 23.6401961, 88.841841),
+   (57, 4, 'Jashore', 23.16643, 89.2081126),
+   (58, 4, 'Jhenaidah', 23.5448176, 89.1539213),
+   (59, 4, 'Khulna', 22.815774, 89.568679),
+   (60, 4, 'Kushtia', 23.901258, 89.120482),
+   (61, 4, 'Magura', 23.487337, 89.419956),
+   (62, 4, 'Meherpur', 23.762213, 88.631821),
+   (63, 4, 'Narail', 23.172534, 89.512672),
+   (64, 4, 'Satkhira', 22.7185, 89.0705);
+
+create table prescription(
+     id BIGINT AUTO_INCREMENT,
+     bmdc_id int NOT NULL,
+     district_id INT NOT NULL ,
+     CONSTRAINT pk_prescription PRIMARY KEY (id),
+     CONSTRAINT fk_bmdc_id FOREIGN KEY (bmdc_id) REFERENCES doctor(bmdc),
+     CONSTRAINT fk_district_id FOREIGN KEY (district_id) REFERENCES district(id)
+);
+
+INSERT INTO prescription (id, bmdc_id, district_id) VALUES
+    (1, 1000, 1),
+    (2, 1000, 1),
+    (3, 1000, 1),
+    (4, 1000, 1),
+    (5, 1000, 1),
+    (6, 1000, 1),
+    (7, 1000, 1),
+    (8, 1000, 1),
+    (9, 1000, 1),
+    (10, 1000, 1);
+
+INSERT INTO prescription (id, bmdc_id, district_id) VALUES
+    (11, 1001, 1),
+    (12, 1002, 1);
+
+INSERT INTO prescription (id, bmdc_id, district_id) VALUES
+    (13, 1003, 2),
+    (14, 1004, 2);
+
+INSERT INTO prescription (id, bmdc_id, district_id) VALUES
+    (15, 1005, 23),
+    (16, 1005, 23);
+
+-- -------------------------------------------
 create table user (
     id			BIGINT NOT NULL auto_increment,
     username 	VARCHAR(100) NOT NULL,
@@ -194,145 +267,89 @@ create table doctor(
 );
 
 INSERT INTO doctor (id, name, bmdc) VALUES
-    (1, 'Dr. Ashraful Islam', FLOOR(RAND() * (9999 - 1000 + 1)) + 1000),
-    (2, 'Dr. Zahid Hossain', FLOOR(RAND() * (9999 - 1000 + 1)) + 1000),
-    (3, 'Dr. Omar Ahmed', FLOOR(RAND() * (9999 - 1000 + 1)) + 1000);
+    (1, 'Dr. Ashraful Islam', 1000),
+    (2, 'Dr. Zahid Hossain', 1001),
+    (3, 'Dr. Omar Ahmed', 1002),
+    (4, 'Dr. Fahmida Rahman', 1003),
+    (5, 'Dr. Saifur Rahman', 1004),
+    (6, 'Dr. Ayesha Siddiqua', 1005),
+    (7, 'Dr. Nasrin Akter', 1006),
+    (8, 'Dr. Kazi Hasan', 1007),
+    (9, 'Dr. Mahbubur Rahman', 1008),
+    (10, 'Dr. Taslima Begum', 1009),
+    (11, 'Dr. Anisur Rahman', 1010),
+    (12, 'Dr. Rasheda Chowdhury', 1011),
+    (13, 'Dr. Shamsul Alam', 1012),
+    (14, 'Dr. Farzana Haque', 1013),
+    (15, 'Dr. Golam Mostafa', 1014),
+    (16, 'Dr. Nilufa Yasmin', 1015),
+    (17, 'Dr. Zakir Hossain', 1016),
+    (18, 'Dr. Khaled Mahmud', 1017),
+    (19, 'Dr. Razia Sultana', 1018),
+    (20, 'Dr. Mahfuzur Rahman', 1019),
+    (21, 'Dr. Humayun Kabir', 1020),
+    (22, 'Dr. Ashraful Islam', 1021);
 
-create table prescription(
-    id BIGINT AUTO_INCREMENT,
-    bmdc_id int NOT NULL,
-    location_id BIGINT NOT NULL ,
-    CONSTRAINT pk_prescription PRIMARY KEY (id),
-    CONSTRAINT fk_bmdc_id FOREIGN KEY (bmdc_id) REFERENCES doctor(bmdc),
-    CONSTRAINT fk_location_id FOREIGN KEY (location_id) REFERENCES location(id)
-);
-
--- Inserting prescriptions
--- Shahbag
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 1), (4777, 1), (5599, 1), (4515, 1), (4777, 1), (5599, 1), (4515, 1), (4777, 1), (5599, 1), (4515, 1);
-
--- Dhanmondi
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 2), (4777, 2), (5599, 2), (4515, 2), (4777, 2), (5599, 2), (4515, 2);
-
--- Gulshan
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 3), (4777, 3), (5599, 3), (4515, 3), (4777, 3), (5599, 3), (4515, 3), (4777, 3), (5599, 3), (4515, 3),
-(4777, 3), (5599, 3), (4515, 3), (4777, 3), (5599, 3), (4515, 3), (4777, 3), (5599, 3), (4515, 3), (4777, 3);
-
--- Uttara
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 4), (4777, 4), (5599, 4), (4515, 4), (4777, 4);
-
-
--- Banani
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 5), (4777, 5), (5599, 5), (4515, 5), (4777, 5), (5599, 5), (4515, 5), (4777, 5), (5599, 5), (4515, 5),
-(4777, 5), (5599, 5), (4515, 5), (4777, 5), (5599, 5), (4515, 5), (4777, 5), (5599, 5), (4515, 5), (4777, 5);
-
--- Mirpur
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 6), (4777, 6), (5599, 6), (4515, 6), (4777, 6);
-
--- Mohammadpur
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 7), (4777, 7), (5599, 7), (4515, 7), (4777, 7), (5599, 7), (4515, 7);
-
--- Farmgate
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 8), (4777, 8), (5599, 8), (4515, 8), (4777, 8), (5599, 8), (4515, 8), (4777, 8), (5599, 8), (4515, 8),
-(4777, 8), (5599, 8);
-
--- Motijheel
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 9), (4777, 9), (5599, 9), (4515, 9), (4777, 9), (5599, 9), (4515, 9), (4777, 9), (5599, 9), (4515, 9);
-
--- Karwan Bazar
-INSERT INTO prescription (bmdc_id, location_id) VALUES
-(4515, 10), (4777, 10), (5599, 10), (4515, 10), (4777, 10), (5599, 10), (4515, 10), (4777, 10);
-
-
+-- -----------------------------------------------------------------
 CREATE TABLE drug_prescription (
-  drug_id    BIGINT NOT NULL,
-  prescription_id BIGINT NOT NULL,
-  CONSTRAINT pk_drug_prescription PRIMARY KEY (drug_id, prescription_id),
-  CONSTRAINT fk_drug_id FOREIGN KEY (drug_id) REFERENCES drug(id),
-  CONSTRAINT fk_prescription_id FOREIGN KEY (prescription_id) REFERENCES prescription(id)
+   drug_id    BIGINT NOT NULL,
+   prescription_id BIGINT NOT NULL,
+   CONSTRAINT pk_drug_prescription PRIMARY KEY (drug_id, prescription_id),
+   CONSTRAINT fk_drug_id FOREIGN KEY (drug_id) REFERENCES drug(id),
+   CONSTRAINT fk_prescription_id FOREIGN KEY (prescription_id) REFERENCES prescription(id)
 );
 
 
 INSERT INTO drug_prescription (drug_id, prescription_id) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
-(1, 8),
-(1, 9),
-(1, 10);
+     (1, 1),
+     (1, 2),
+     (1, 3),
+     (1, 4),
+     (3, 5);
 
-INSERT INTO drug_prescription (drug_id, prescription_id)
-VALUES
-(2, 11),
-(2, 12),
-(2, 13),
-(2, 14),
-(2, 15),
-(2, 16),
-(2, 17);
-
-INSERT INTO drug_prescription (drug_id, prescription_id)
-VALUES
-(6, 18),
-(6, 19),
-(6, 20),
-(6, 21),
-(6, 22),
-(6, 23),
-(6, 24),
-(6, 25),
-(6, 26),
-(6, 27),
-(6, 28),
-(6, 29),
-(6, 30),
-(6, 31),
-(6, 32),
-(6, 33),
-(6, 34),
-(6, 35),
-(6, 36),
-(6, 37);
+INSERT INTO drug_prescription (drug_id, prescription_id) VALUES
+     (1, 11),
+     (1, 12);
 
 
-INSERT INTO drug_prescription (drug_id, prescription_id)
-SELECT drug_id, prescription_id
-FROM (
-    SELECT drug.id AS drug_id, prescription.id AS prescription_id
-    FROM drug, prescription
-    ORDER BY RAND()
-) AS shuffled_data
-LIMIT 100;
+INSERT INTO drug_prescription (drug_id, prescription_id) VALUES
+     (1, 13),
+     (1, 14);
+
+INSERT INTO drug_prescription (drug_id, prescription_id) VALUES
+     (1, 15),
+     (1, 16);
+
 
 # ------------------------------------------------------------
 
 
-select l.lat, l.lng, l.name, 'Napa' as "drug_name",
-    (select count(*)
-    from prescription p
-    join location l on p.location_id = l.id
-    join drug_prescription dp on p.id = dp.prescription_id
-    join drug d on d.id = dp.drug_id
-    where d.name = 'Napa' and l.name = 'Banani') as "count"
-from location l where l.name = 'Banani';
+SELECT
+    l.id AS districtId,
+    l.name AS districtName,
+    COUNT(DISTINCT p.id) AS prescriptionCount,
+    l.lat,
+    l.lng
+FROM prescription p
+     JOIN district l ON p.district_id = l.id
+     JOIN drug_prescription dp ON p.id = dp.prescription_id
+     JOIN drug d ON d.id = dp.drug_id
+     JOIN division d2 ON l.division_id = d2.id
+WHERE d.name = 'Napa' AND d2.name = 'Dhaka'
+GROUP BY l.id, l.name;
 
+-- ---------------------------------------------------------------
 
-select p.*
-from prescription p
-    join location l on p.location_id = l.id
-    join drug_prescription dp on p.id = dp.prescription_id
-    join drug d on d.id = dp.drug_id
-where d.name = 'Paricel' and l.name = 'Shahbag';
+SELECT
+    l.division_id,
+    d2.name AS division_name,
+    COUNT(DISTINCT p.id) AS prescription_count,
+    d2.lat,
+    d2.lng
+FROM prescription p
+     JOIN district l ON p.district_id = l.id
+     JOIN drug_prescription dp ON p.id = dp.prescription_id
+     JOIN drug d ON d.id = dp.drug_id
+     JOIN division d2 ON l.division_id = d2.id
+WHERE d.name = 'Napa'
+GROUP BY l.division_id, d2.name;
