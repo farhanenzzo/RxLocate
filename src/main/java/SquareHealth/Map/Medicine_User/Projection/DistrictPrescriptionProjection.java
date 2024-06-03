@@ -1,4 +1,4 @@
-package SquareHealth.Map.Medicine_User.DTO;
+package SquareHealth.Map.Medicine_User.Projection;
 
 public interface DistrictPrescriptionProjection {
 

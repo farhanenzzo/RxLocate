@@ -35,23 +35,4 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-//    @Transient // This annotation tells JPA not to persist this field to the database
-//    private transient BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//    public void setPassword(String password) {
-//        this.password = passwordEncoder.encode(password);
-//    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

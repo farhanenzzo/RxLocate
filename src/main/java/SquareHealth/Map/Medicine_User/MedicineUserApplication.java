@@ -10,8 +10,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -74,13 +76,12 @@ public class MedicineUserApplication {
 	Authentication/Login Controller
 -------------------------------------------------- */
 @RestController
+@RequiredArgsConstructor
 class AuthController {
 
-	@Autowired
-	private JwtService jwtService;
+	private final JwtService jwtService;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
@@ -95,18 +96,12 @@ class AuthController {
 /* -----------------------
 	Login Request DTO/Form
 -------------------------- */
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 class LoginRequestDTO {
 	private String username;
 	private String password;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
 }
 
 
@@ -116,18 +111,15 @@ class LoginRequestDTO {
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 class SecurityConfiguration {
 
-	@Autowired
-	private JwtTokenFilter jwtTokenFilter;
+	private final JwtTokenFilter jwtTokenFilter;
 
-	@Autowired
-	private UserDetailsServiceImpl userDetailsServiceImpl;
+	private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
-	@Autowired
 	public void configurePasswordEncoder(AuthenticationManagerBuilder builder) throws Exception {
 		builder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder);
 	}
@@ -150,10 +142,9 @@ class SecurityConfiguration {
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> req
-						.requestMatchers("/login").permitAll()
-						.requestMatchers("/map/**", "doc/**").authenticated()
+						.requestMatchers( "/register/**","/login", "/swagger-ui/**", "/v3/api-docs/**", "/excel/**", "/actuator").permitAll()
+						.requestMatchers("/map/**", "/doctor/**", "/drug/**", "/div/**").authenticated()
 				)
-
 				.sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
 				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
@@ -166,10 +157,10 @@ class SecurityConfiguration {
  	todo : Authorization Format --> Bearer-space-(token)
 ------------------------------------------------------------------------ */
 @Component
+@RequiredArgsConstructor
 class JwtTokenFilter extends OncePerRequestFilter {
 
-	@Autowired
-	private JwtService jwtService;
+	private final JwtService jwtService;
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest httpServletRequest,
@@ -203,10 +194,10 @@ class JwtTokenFilter extends OncePerRequestFilter {
  	Custom UserDetailsService implementation
 -------------------------------------------- */
 @Service
+@RequiredArgsConstructor
 class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

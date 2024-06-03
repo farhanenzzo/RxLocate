@@ -27,7 +27,7 @@ public class Drug {
     @ManyToMany(mappedBy = "drugs")
     private List<Prescription> prescriptions;
 
-    public String getName() {
+    public String getDrugName() {
         return name;
     }
 }

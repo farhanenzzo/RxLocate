@@ -1,4 +1,4 @@
-package SquareHealth.Map.Medicine_User.DTO;
+package SquareHealth.Map.Medicine_User.Projection;
 
 public interface DivisionPrescriptionProjection {
 
@@ -7,4 +7,5 @@ public interface DivisionPrescriptionProjection {
     int getPrescriptionCount();
     double getLat();
     double getLng();
+    String getDrugName();
 }

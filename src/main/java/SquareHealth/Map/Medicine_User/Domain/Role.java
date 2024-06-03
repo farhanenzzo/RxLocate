@@ -18,10 +18,6 @@ public class Role {
     private int id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private ERole roleType;
-
-    public ERole getRoleType() {
-        return roleType;
-    }
 }
