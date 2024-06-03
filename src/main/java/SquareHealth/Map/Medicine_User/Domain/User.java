@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.List;
 import java.util.Set;
 
 @Table
@@ -29,29 +30,7 @@ public class User {
     @Column
     private String password;
 
+    @ElementCollection
     @Enumerated(EnumType.STRING)
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-
-//    @Transient // This annotation tells JPA not to persist this field to the database
-//    private transient BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//    public void setPassword(String password) {
-//        this.password = passwordEncoder.encode(password);
-//    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
+    private Set<ERole> role;
 }

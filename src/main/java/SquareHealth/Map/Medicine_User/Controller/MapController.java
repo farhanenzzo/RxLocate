@@ -1,40 +1,47 @@
 package SquareHealth.Map.Medicine_User.Controller;
 
-import SquareHealth.Map.Medicine_User.DTO.MapDTO;
-import SquareHealth.Map.Medicine_User.Domain.Drug;
-import SquareHealth.Map.Medicine_User.Domain.Location;
-import SquareHealth.Map.Medicine_User.Domain.Prescription;
-import SquareHealth.Map.Medicine_User.Repository.DrugRepository;
-import SquareHealth.Map.Medicine_User.Repository.LocationRepository;
+import SquareHealth.Map.Medicine_User.Projection.DistrictPrescriptionProjection;
+import SquareHealth.Map.Medicine_User.Projection.DivisionPrescriptionProjection;
 import SquareHealth.Map.Medicine_User.Repository.PrescriptionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequiredArgsConstructor
+@RequestMapping("/map")
 public class MapController {
 
-    @Autowired
-    private LocationRepository locationRepository;
+    private final PrescriptionRepository prescriptionRepository;
 
-    @Autowired
-    private PrescriptionRepository prescriptionRepository;
+    @GetMapping("/{drugName}")
+    public ResponseEntity<List<DivisionPrescriptionProjection>> getPrescriptionCountByDrugName(
+            @PathVariable String drugName,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "5") int pageSize) {
 
-    @Autowired
-    private DrugRepository drugRepository;
+        List<DivisionPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInDivisionsByDrugName(
+                drugName, PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount").descending())
+        ).getContent();
 
-    @GetMapping("/map/{locationName}/{drugName}")
-    public MapDTO getLocationData(@PathVariable  String locationName, @PathVariable String drugName) {
-        Location location = locationRepository.findByName(locationName);
-        Drug drug = drugRepository.findByName(drugName);
-        if (location == null || drug == null) {
-            return null;
-        }
-        List<Prescription> prescriptions = prescriptionRepository.findByLocationNameAndBrandName(location.getName(), drug.getName());
-        int prescriptionCount = prescriptions.size();
+        return ResponseEntity.ok(prescriptions);
+    }
 
-        return new MapDTO(location.getLat(), location.getLng(), location.getName(), prescriptionCount, drug.getName());
+    @GetMapping("/select/{drugName}/{divisionName}")
+    public ResponseEntity<List<DistrictPrescriptionProjection>> getPrescriptionCountByDrugNameAndAreaName(
+            @PathVariable String drugName,
+            @PathVariable String divisionName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        List<DistrictPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInDistrictByDrugNameAndAreaName(
+                drugName, divisionName, PageRequest.of(page, size, Sort.by("prescriptionCount").descending())
+        ).getContent();
+
+        return ResponseEntity.ok(prescriptions);
     }
 }

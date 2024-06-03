@@ -13,6 +13,6 @@ public class CORS implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true)
-                .maxAge(3600); // 1 hour
+                .maxAge(3600);
     }
 }

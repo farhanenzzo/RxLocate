@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "generic")
 public class Generic {
 
     @Id
@@ -22,5 +21,5 @@ public class Generic {
 
     @OneToMany
     @JoinColumn(name = "generic_id")
-    List<Drug> drugs;
+    private List<Drug> drugs;
 }

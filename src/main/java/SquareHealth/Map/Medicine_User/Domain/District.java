@@ -8,18 +8,23 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Vendor {
+@Entity
+@Table(name = "district")
+public class District {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String name;
 
+    private double lat;
+
+    private double lng;
+
     @OneToMany
-    @JoinColumn(name = "vendor_id")
-    private List<Drug> drugs;
+    @JoinColumn(name = "district_id")
+    private List<Prescription> prescriptions;
 }

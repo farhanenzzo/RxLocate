@@ -11,15 +11,19 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Vendor {
+public class Division {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    int id;
 
-    private String name;
+    String name;
+
+    double lat;
+
+    double lng;
 
     @OneToMany
-    @JoinColumn(name = "vendor_id")
-    private List<Drug> drugs;
+    @JoinColumn(name = "division_id")
+    List<District> districts;
 }
