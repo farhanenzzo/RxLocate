@@ -10,11 +10,11 @@ public interface DrugRepository extends JpaRepository<Drug, Long> {
     Drug findByName(String name);
 
     @Query(value = "SELECT " +
-            "    d.name AS drugName, " +
-            "    d.formation As drugFormation, " +
-            "    d.strength As drugStrength, " +
-            "    v.name AS vendor, " +
-            "    g.name AS generic " +
+            "d.name AS drugName, " +
+            "d.formation AS drugFormation, " +
+            "d.strength AS drugStrength, " +
+            "v.name AS vendor, " +
+            "g.name AS generic " +
             "FROM drug d " +
             "LEFT JOIN vendor v ON d.vendor_id = v.id " +
             "LEFT JOIN generic g ON d.generic_id = g.id " +

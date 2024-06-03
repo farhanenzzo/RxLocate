@@ -24,17 +24,16 @@ public class DrugController {
 
     @GetMapping("/drug-list")
     public ResponseEntity<List<DrugDTO>> getDrugs() {
-        List<DrugDTO> drugDTOS = drugService.fetchAllDrugs().stream()
-                .map(DrugDTO::from)
-                .toList();
+        List<DrugDTO> drugDTOS = drugService.fetchAllDrugs()
+                .stream().map(DrugDTO::from).toList();
 
         return ResponseEntity.ok(drugDTOS);
     }
 
     @GetMapping("/info/{drugName}")
     public ResponseEntity<DrugDTO> getDrugByName(@PathVariable String drugName) {
-
         Drug drug = drugService.fetchDrugByName(drugName).orElseThrow(IllegalAccessError::new);
+
         DrugDTO drugDTO = DrugDTO.from(drug);
 
         return ResponseEntity.ok(drugDTO);
@@ -42,8 +41,8 @@ public class DrugController {
 
     @GetMapping("/drug-info/{drugName}")
     public ResponseEntity<DrugVendorGenericProjection> getDrugInfoByName(@PathVariable String drugName) {
-
         DrugVendorGenericProjection drugVendorGenericProjection = drugRepository.fetchDrugInfoByName(drugName);
+
         return ResponseEntity.ok(drugVendorGenericProjection);
     }
 }

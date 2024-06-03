@@ -1,5 +1,6 @@
 package SquareHealth.Map.Medicine_User.DTO;
 
+import SquareHealth.Map.Medicine_User.Domain.Division;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,8 @@ public class DivisionDTO {
     private double lat;
 
     private double lng;
+
+    public static DivisionDTO toDTO(Division division) {
+        return new DivisionDTO(division.getId(), division.getName(), division.getLat(), division.getLng());
+    }
 }

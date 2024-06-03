@@ -20,9 +20,7 @@ public class DivisionController {
     @GetMapping("/division-list")
     public ResponseEntity<List<DivisionDTO>> getAllLocation() {
         List<DivisionDTO> divisions = divisionService.findAllDivision()
-                .stream()
-                .map(division -> new DivisionDTO(division.getId(), division.getName(), division.getLat(), division.getLng()))
-                .toList();
+                .stream().map(DivisionDTO::toDTO).toList();
         return ResponseEntity.ok(divisions);
     }
 }

@@ -20,8 +20,14 @@ public class Prescription {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "drug_prescription",
-            joinColumns = {@JoinColumn(name = "prescription_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "drug_id", referencedColumnName = "id")}
+            joinColumns = {
+                    @JoinColumn(name = "prescription_id",
+                            referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "drug_id",
+                            referencedColumnName = "id")
+            }
     )
     List<Drug> drugs;
 }

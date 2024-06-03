@@ -13,13 +13,8 @@ import java.util.List;
 
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
 
-    @Query(value = "SELECT " +
-            "    l.division_id AS divisionId, " +
-            "    d2.name AS divisionName, " +
-            "    COUNT(DISTINCT p.id) AS prescriptionCount, " +
-            "    d2.lat, " +
-            "    d2.lng, " +
-            "    d.name as drugName " +
+    @Query(value = "SELECT l.division_id AS divisionId,d2.name AS divisionName, " +
+            "COUNT(DISTINCT p.id) AS prescriptionCount,d2.lat, d2.lng, d.name as drugName " +
             "FROM prescription p " +
             "JOIN district l ON p.district_id = l.id " +
             "JOIN drug_prescription dp ON p.id = dp.prescription_id " +

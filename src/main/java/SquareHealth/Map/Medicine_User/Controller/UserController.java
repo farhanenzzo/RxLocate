@@ -17,7 +17,6 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        System.out.println("User created");
         User newUser = userService.createUser(user);
         return ResponseEntity.created(URI.create("/register/" + newUser.getId())).body(newUser);
     }
@@ -29,8 +28,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Deleted user");
     }
 }

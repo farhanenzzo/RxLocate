@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DoctorDTO {
-    private int BMDC;
+    private int bmdc;
     private String name;
 
     public static DoctorDTO from(Doctor doctor) {
         DoctorDTO doctorDTO = new DoctorDTO();
-        doctorDTO.BMDC = doctor.getBMDC();
-        doctorDTO.name = doctor.getName();
+        doctorDTO.setBmdc(doctor.getBmdc());
+        doctorDTO.setName(doctor.getName());
         return doctorDTO;
     }
 }

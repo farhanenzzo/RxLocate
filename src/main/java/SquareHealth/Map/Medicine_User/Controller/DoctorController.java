@@ -1,8 +1,8 @@
 package SquareHealth.Map.Medicine_User.Controller;
 
 import SquareHealth.Map.Medicine_User.DTO.DoctorDTO;
-import SquareHealth.Map.Medicine_User.Projection.DoctorDivisionProjection;
 import SquareHealth.Map.Medicine_User.Domain.Doctor;
+import SquareHealth.Map.Medicine_User.Projection.DoctorDivisionProjection;
 import SquareHealth.Map.Medicine_User.Repository.DoctorRepository;
 import SquareHealth.Map.Medicine_User.Service.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class DoctorController {
 
     @GetMapping("/info/{bmdcId}")
     public ResponseEntity<DoctorDTO> getDoctorByBmdc(@PathVariable int bmdcId) {
-
         Doctor doctor = doctorService.findDoctorByBmdc(bmdcId).orElseThrow(IllegalAccessError::new);
+
         DoctorDTO doctorDTO = DoctorDTO.from(doctor);
 
         return ResponseEntity.ok(doctorDTO);
@@ -34,18 +34,16 @@ public class DoctorController {
 
     @GetMapping("/doctor-list-by-division/{divisionName}")
     public ResponseEntity<List<DoctorDTO>> getDoctorsByArea(@PathVariable String divisionName) {
-        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDivision(divisionName).stream()
-                .map(DoctorDTO::from)
-                .toList();
+        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDivision(divisionName)
+                .stream().map(DoctorDTO::from).toList();
 
         return ResponseEntity.ok(doctorDTOS);
     }
 
     @GetMapping("/doctor-list-by-drug/{drugName}")
     public ResponseEntity<List<DoctorDTO>> getDoctorsByDrug(@PathVariable String drugName) {
-        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDrug(drugName).stream()
-                .map(DoctorDTO::from)
-                .toList();
+        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDrug(drugName)
+                .stream().map(DoctorDTO::from).toList();
 
         return ResponseEntity.ok(doctorDTOS);
     }
@@ -59,9 +57,8 @@ public class DoctorController {
 
     @GetMapping("/doctor-list-by-division-drug/{divisionName}/{drugName}")
     public ResponseEntity<List<DoctorDTO>> getDoctorsByArea(@PathVariable String divisionName, @PathVariable String drugName) {
-        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDivisionAndDrug(divisionName, drugName).stream()
-                .map(DoctorDTO::from)
-                .toList();
+        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDivisionAndDrug(divisionName, drugName)
+                .stream().map(DoctorDTO::from).toList();
 
         return ResponseEntity.ok(doctorDTOS);
     }

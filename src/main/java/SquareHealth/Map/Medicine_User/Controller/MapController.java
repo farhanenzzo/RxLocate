@@ -25,9 +25,7 @@ public class MapController {
             @RequestParam(defaultValue = "5") int pageSize) {
 
         List<DivisionPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInDivisionsByDrugName(
-                drugName,
-                PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount")
-                        .descending())
+                drugName, PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount").descending())
         ).getContent();
 
         return ResponseEntity.ok(prescriptions);
@@ -37,11 +35,11 @@ public class MapController {
     public ResponseEntity<List<DistrictPrescriptionProjection>> getPrescriptionCountByDrugNameAndAreaName(
             @PathVariable String drugName,
             @PathVariable String divisionName,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "5") int pageSize) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
 
         List<DistrictPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInDistrictByDrugNameAndAreaName(
-                drugName, divisionName, PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount").descending())
+                drugName, divisionName, PageRequest.of(page, size, Sort.by("prescriptionCount").descending())
         ).getContent();
 
         return ResponseEntity.ok(prescriptions);
