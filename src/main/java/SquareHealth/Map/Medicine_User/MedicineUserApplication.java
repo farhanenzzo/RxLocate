@@ -142,8 +142,8 @@ class SecurityConfiguration {
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> req
-						.requestMatchers( "/register/**","/login", "/swagger-ui/**", "/v3/api-docs/**", "/excel/**", "/actuator").permitAll()
-						.requestMatchers("/map/**", "/doctor/**", "/drug/**", "/div/**").authenticated()
+						.requestMatchers( "/register/**","/login", "/swagger-ui/**", "/v3/api-docs/**", "/excel/**").permitAll()
+						.requestMatchers("/map/**", "/doctor/**", "/drug/**", "/div/**", "/area/**").authenticated()
 				)
 				.sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
 				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
