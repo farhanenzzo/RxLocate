@@ -11,20 +11,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "district")
 public class District {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
-    String name;
+    private String name;
 
-    double lat;
+    private double lat;
 
-    double lng;
+    private double lng;
 
     @OneToMany
     @JoinColumn(name = "district_id")
-    List<Prescription> prescriptions;
+    private List<Area> areas;
 }

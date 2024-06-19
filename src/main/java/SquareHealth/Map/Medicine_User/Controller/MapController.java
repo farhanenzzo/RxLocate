@@ -1,8 +1,10 @@
 package SquareHealth.Map.Medicine_User.Controller;
 
+import SquareHealth.Map.Medicine_User.Projection.AreaPrescriptionProjection;
 import SquareHealth.Map.Medicine_User.Projection.DistrictPrescriptionProjection;
 import SquareHealth.Map.Medicine_User.Projection.DivisionPrescriptionProjection;
 import SquareHealth.Map.Medicine_User.Repository.PrescriptionRepository;
+import SquareHealth.Map.Medicine_User.Service.DrugService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,33 +19,30 @@ import java.util.List;
 public class MapController {
 
     private final PrescriptionRepository prescriptionRepository;
+    private final DrugService drugService;
 
-    @GetMapping("/{drugName}")
-    public ResponseEntity<List<DivisionPrescriptionProjection>> getPrescriptionCountByDrugName(
+    @GetMapping("/{drugName}/{divisionName}/{districtName}")
+    public ResponseEntity<List<AreaPrescriptionProjection>> getPrescriptionCountByDrugDivisionDistrict(
             @PathVariable String drugName,
+            @PathVariable String divisionName,
+            @PathVariable String districtName,
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "5") int pageSize) {
 
-        List<DivisionPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInDivisionsByDrugName(
-                drugName,
-                PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount")
-                        .descending())
+        List<AreaPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInAreaByDrugAndDivisionAndDistrict(
+                drugName, divisionName, districtName, PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount").descending())
         ).getContent();
 
         return ResponseEntity.ok(prescriptions);
     }
 
-    @GetMapping("/select/{drugName}/{divisionName}")
-    public ResponseEntity<List<DistrictPrescriptionProjection>> getPrescriptionCountByDrugNameAndAreaName(
-            @PathVariable String drugName,
-            @PathVariable String divisionName,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "5") int pageSize) {
+    @GetMapping("/summary")
+    public ResponseEntity<?> getPrescriptionSummaryByDrugOrDrugAndDivision(@RequestParam(defaultValue = "0") int page,
+                                                                           @RequestParam(defaultValue = "10") int size,
+                                                                           @RequestParam() String drugName,
+                                                                           @RequestParam(required = false) String divisionName) {
+        List<?> mapSummary = drugService.mapSummary(page, size, drugName, divisionName);
 
-        List<DistrictPrescriptionProjection> prescriptions = prescriptionRepository.findPrescriptionCountInDistrictByDrugNameAndAreaName(
-                drugName, divisionName, PageRequest.of(pageNumber, pageSize, Sort.by("prescriptionCount").descending())
-        ).getContent();
-
-        return ResponseEntity.ok(prescriptions);
+        return ResponseEntity.ok(mapSummary);
     }
 }

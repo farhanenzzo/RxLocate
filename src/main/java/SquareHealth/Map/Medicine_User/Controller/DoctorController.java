@@ -32,37 +32,34 @@ public class DoctorController {
         return ResponseEntity.ok(doctorDTO);
     }
 
-    @GetMapping("/doctor-list-by-division/{divisionName}")
-    public ResponseEntity<List<DoctorDTO>> getDoctorsByArea(@PathVariable String divisionName) {
+    @GetMapping("/by-division/{divisionName}")
+    public ResponseEntity<List<DoctorDTO>> getDoctorsByDivision(@PathVariable String divisionName) {
         List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDivision(divisionName).stream()
-                .map(DoctorDTO::from)
-                .toList();
+                .map(DoctorDTO::from).toList();
 
         return ResponseEntity.ok(doctorDTOS);
     }
 
-    @GetMapping("/doctor-list-by-drug/{drugName}")
-    public ResponseEntity<List<DoctorDTO>> getDoctorsByDrug(@PathVariable String drugName) {
-        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDrug(drugName).stream()
-                .map(DoctorDTO::from)
-                .toList();
+//    @GetMapping("/by-drug/{drugName}")
+//    public ResponseEntity<List<DoctorDTO>> getDoctorsByDrug(@PathVariable String drugName) {
+//        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDrug(drugName).stream()
+//                .map(DoctorDTO::from).toList();
+//
+//        return ResponseEntity.ok(doctorDTOS);
+//    }
 
-        return ResponseEntity.ok(doctorDTOS);
-    }
-
-    @GetMapping("/doctor-division-list-by-drug/{drugName}")
-    public ResponseEntity<List<DoctorDivisionProjection>> getDoctorsWithDivisionByDrug(@PathVariable String drugName) {
-        List<DoctorDivisionProjection> doctorDivisionProjectionList = doctorRepository.findDoctorsWithDivisionByDrug(drugName);
+    @GetMapping("/by-division-drug/{divisionName}/{drugName}")
+    public ResponseEntity<List<DoctorDivisionProjection>> getDoctorsByDivisionAndDrug(@PathVariable String divisionName,
+                                                                                      @PathVariable String drugName) {
+        List<DoctorDivisionProjection> doctorDivisionProjectionList = doctorRepository.findDoctorsByDivisionAndDrug(divisionName, drugName);
 
         return ResponseEntity.ok(doctorDivisionProjectionList);
     }
 
-    @GetMapping("/doctor-list-by-division-drug/{divisionName}/{drugName}")
-    public ResponseEntity<List<DoctorDTO>> getDoctorsByArea(@PathVariable String divisionName, @PathVariable String drugName) {
-        List<DoctorDTO> doctorDTOS = doctorRepository.findDoctorsByDivisionAndDrug(divisionName, drugName).stream()
-                .map(DoctorDTO::from)
-                .toList();
+    @GetMapping("/by-drug/{drugName}")
+    public ResponseEntity<List<DoctorDivisionProjection>> getDoctorsByDrug(@PathVariable String drugName) {
+        List<DoctorDivisionProjection> doctorDivisionProjectionList = doctorRepository.findDoctorsByDrugName(drugName);
 
-        return ResponseEntity.ok(doctorDTOS);
+        return ResponseEntity.ok(doctorDivisionProjectionList);
     }
 }

@@ -18,15 +18,17 @@ public class DrugDTO {
 
     private String drugStrength;
 
-/** private String drugGeneric;
-
-    private String drugVendor;  **/
+    /**
+     * private String drugGeneric;
+     * <p>
+     * private String drugVendor;
+     **/
 
     public static DrugDTO from(Drug drug) {
 
         DrugDTO drugDTO = new DrugDTO();
 
-        drugDTO.name = drug.getDrugName();
+        drugDTO.name = drug.getName();
         drugDTO.drugFormation = drug.getFormation();
         drugDTO.drugStrength = drug.getStrength();
 

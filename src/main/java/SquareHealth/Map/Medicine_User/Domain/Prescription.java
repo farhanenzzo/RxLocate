@@ -11,17 +11,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "prescription")
 public class Prescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "drug_prescription",
             joinColumns = {@JoinColumn(name = "prescription_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "drug_id", referencedColumnName = "id")}
     )
-    List<Drug> drugs;
+    private List<Drug> drugs;
 }

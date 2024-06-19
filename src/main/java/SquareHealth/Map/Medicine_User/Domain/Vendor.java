@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "vendor")
 public class Vendor {
 
     @Id
@@ -22,5 +21,5 @@ public class Vendor {
 
     @OneToMany
     @JoinColumn(name = "vendor_id")
-    List<Drug> drugs;
+    private List<Drug> drugs;
 }

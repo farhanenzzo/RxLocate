@@ -4,7 +4,9 @@ public interface DoctorDivisionProjection {
 
     String getDoctorName();
 
-    int getDoctorBMDC();
+    Integer getDoctorBMDC();
+
+    String getMbbsFrom();
 
     String getDivisionName();
 }

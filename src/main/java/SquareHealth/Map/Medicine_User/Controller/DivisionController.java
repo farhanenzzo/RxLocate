@@ -12,17 +12,15 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/div")
+@RequestMapping("/division")
 public class DivisionController {
 
     private final DivisionService divisionService;
 
-    @GetMapping("/division-list")
+    @GetMapping("/list")
     public ResponseEntity<List<DivisionDTO>> getAllLocation() {
-        List<DivisionDTO> divisions = divisionService.findAllDivision()
-                .stream()
-                .map(division -> new DivisionDTO(division.getId(), division.getName(), division.getLat(), division.getLng()))
-                .toList();
+        List<DivisionDTO> divisions = divisionService.findAllDivision().stream()
+                .map(DivisionDTO::toDTO).toList();
         return ResponseEntity.ok(divisions);
     }
 }

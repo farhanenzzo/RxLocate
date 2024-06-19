@@ -30,19 +30,19 @@ public class ExcelHelper {
 
     public static ByteArrayInputStream divisionDataToExcel(List<DivisionPrescriptionProjection> list) {
 
-        try{
+        try {
             Workbook workbook = new XSSFWorkbook();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Sheet sheet = workbook.createSheet(SHEET_NAME);
 
             Row row = sheet.createRow(0);
-            for(int i = 0; i < DIVISION_HEADERS.length; i++){
+            for (int i = 0; i < DIVISION_HEADERS.length; i++) {
                 Cell cell = row.createCell(i);
                 cell.setCellValue(DIVISION_HEADERS[i]);
             }
 
             int rowIndex = 1;
-            for(DivisionPrescriptionProjection dp : list){
+            for (DivisionPrescriptionProjection dp : list) {
                 Row dataRow = sheet.createRow(rowIndex);
                 rowIndex++;
                 dataRow.createCell(0).setCellValue(dp.getDrugName());
@@ -62,19 +62,19 @@ public class ExcelHelper {
 
     public static ByteArrayInputStream districtDataToExcel(List<DistrictPrescriptionProjection> list) {
 
-        try{
+        try {
             Workbook workbook = new XSSFWorkbook();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Sheet sheet = workbook.createSheet(SHEET_NAME);
 
             Row row = sheet.createRow(0);
-            for(int i = 0; i < DISTRICT_HEADERS.length; i++){
+            for (int i = 0; i < DISTRICT_HEADERS.length; i++) {
                 Cell cell = row.createCell(i);
                 cell.setCellValue(DISTRICT_HEADERS[i]);
             }
 
             int rowIndex = 1;
-            for(DistrictPrescriptionProjection dp : list){
+            for (DistrictPrescriptionProjection dp : list) {
                 Row dataRow = sheet.createRow(rowIndex);
                 rowIndex++;
                 dataRow.createCell(0).setCellValue(dp.getDistrictName());

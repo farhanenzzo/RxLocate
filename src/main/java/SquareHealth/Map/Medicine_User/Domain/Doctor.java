@@ -11,11 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "doctor")
 public class Doctor {
-
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
 
     @Id
     @Column(name = "bmdc")
@@ -23,8 +19,10 @@ public class Doctor {
 
     private String name;
 
+    private String mbbsFrom;
+
     @OneToMany
     @JoinColumn(name = "bmdc_id")
-    List<Prescription> prescriptions;
+    private List<Prescription> prescriptions;
 
 }

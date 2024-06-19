@@ -2,16 +2,21 @@ package SquareHealth.Map.Medicine_User.Domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "area")
 public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private Integer id;
 
-    String name;
+    private String name;
 
-    double lat;
+    private double lat;
 
-    double lng;
+    private double lng;
+
+    @OneToMany
+    @JoinColumn(name = "area_id")
+    private List<Prescription> prescriptions;
 }

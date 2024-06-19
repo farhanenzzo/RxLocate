@@ -6,18 +6,30 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface DrugRepository extends JpaRepository<Drug, Long> {
     Drug findByName(String name);
 
     @Query(value = "SELECT " +
             "    d.name AS drugName, " +
-            "    d.formation As drugFormation, " +
-            "    d.strength As drugStrength, " +
+            "    d.formation AS drugFormation, " +
+            "    d.strength AS drugStrength, " +
             "    v.name AS vendor, " +
             "    g.name AS generic " +
-            "FROM drug d " +
-            "LEFT JOIN vendor v ON d.vendor_id = v.id " +
-            "LEFT JOIN generic g ON d.generic_id = g.id " +
-            "WHERE d.name = :drugName", nativeQuery = true)
+            "FROM " +
+            "    drug d " +
+            "LEFT JOIN " +
+            "    vendor v ON d.vendor_id = v.id " +
+            "LEFT JOIN " +
+            "    generic g ON d.generic_id = g.id " +
+            "WHERE " +
+            "    d.name = :drugName ", nativeQuery = true)
     DrugVendorGenericProjection fetchDrugInfoByName(@Param("drugName") String drugName);
+
+    @Query(value = "SELECT dr " +
+            "FROM Drug dr " +
+            "WHERE dr.name " +
+            "LIKE :startsWith% ")
+    List<Drug> searchByName(@Param("startsWith") String startsWith);
 }

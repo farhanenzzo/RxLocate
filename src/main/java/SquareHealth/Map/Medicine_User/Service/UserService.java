@@ -5,9 +5,12 @@ import SquareHealth.Map.Medicine_User.Domain.User;
 import SquareHealth.Map.Medicine_User.Repository.RoleRepository;
 import SquareHealth.Map.Medicine_User.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,7 +32,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @SneakyThrows
     public User updateUser(Long id, User user) {
+        Optional<User> findUserById = findUserById(id);
+        if (findUserById.isEmpty()) {
+            throw new ChangeSetPersister.NotFoundException();
+        }
         return userRepository.save(user);
     }
 
